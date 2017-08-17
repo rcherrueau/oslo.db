@@ -105,6 +105,8 @@ def _deadlock_error(operational_error, match, engine_name, is_disconnect):
          (r'^.*duplicate\s+key.*"(?P<columns>[^"]+)"\s*\n.*'
           r'Key\s+\((?P<key>.*)\)=\((?P<value>.*)\)\s+already\s+exists.*$',
           r"^.*duplicate\s+key.*\"(?P<columns>[^\"]+)\"\s*\n.*$"))
+@filters("cockroachdb", sqla_exc.IntegrityError,
+         r'^.*duplicate\s+key.*"(?P<columns>[^"]+)"\s*\n.*')
 def _default_dupe_key_error(integrity_error, match, engine_name,
                             is_disconnect):
     """Filter for MySQL or Postgresql duplicate key error.
